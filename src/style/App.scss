@@ -5,7 +5,7 @@
 }
 
 body {
-  min-width: 752px;
+  min-width: 500px;
 }
 
 button {
@@ -22,7 +22,7 @@ button {
   cursor: pointer;
 
   &:hover {
-    background-color: #63b0f0;
+    background-color: #196eb4;
   }
 }
 
@@ -46,6 +46,8 @@ button {
 
 .main {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .transfer-filter {
@@ -53,7 +55,7 @@ button {
   flex-direction: column;
   width: 232px;
   height: 252px;
-  margin-right: 20px;
+  margin: 0 20px 20px 0;
   background-color: white;
   box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
   border-radius: 5px;

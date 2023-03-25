@@ -1,1 +1,1 @@
-# flight aggregator
+# flights aggregator

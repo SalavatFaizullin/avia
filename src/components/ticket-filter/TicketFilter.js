@@ -1,16 +1,17 @@
+/* eslint-disable */
 import React from 'react'
-import './TicketFilter.scss'
+import styles from './TicketFilter.module.scss'
 
 const TicketFilter = () => {
   return (
-    <div className='ticket-filter'>
-      <button type='button' className='ticket-filter__button ticket-filter__button--active'>
+    <div className={styles['ticket-filter']}>
+      <button type='button' className={[styles['ticket-filter__button'], styles['ticket-filter__button--active']].join(' ')}>
         Самый дешевый
       </button>
-      <button type='button' className='ticket-filter__button'>
+      <button type='button' className={styles['ticket-filter__button']}>
         Самый быстрый
       </button>
-      <button type='button' className='ticket-filter__button'>
+      <button type='button' className={styles['ticket-filter__button']}>
         Оптимальный
       </button>
     </div>

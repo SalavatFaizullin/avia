@@ -1,6 +1,6 @@
 /* eslint-disable */
 import logo from '../../img/logo.png'
-import './App.scss'
+import styles from './App.module.scss'
 import TicketFilter from '../ticket-filter'
 import TicketList from '../ticket-list'
 import TransferFilter from '../transfer-filter'
@@ -8,7 +8,7 @@ import TransferFilter from '../transfer-filter'
 function App() {
   const Header = () => {
     return (
-      <header className='header'>
+      <header className={styles.header}>
         <img src={logo} alt='logo' />
       </header>
     )
@@ -17,7 +17,7 @@ function App() {
     return (
       <>
         <Header />
-        <main className='main'>
+        <main className={styles.main}>
           <TransferFilter />
           <div>
             <TicketFilter />
@@ -30,8 +30,8 @@ function App() {
   }
 
   return (
-    <div className='App'>
-      <div className='wrapper'>
+    <div className={styles.app}>
+      <div className={styles.wrapper}>
         <Main />
       </div>
     </div>

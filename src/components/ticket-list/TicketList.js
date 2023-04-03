@@ -1,11 +1,11 @@
 /* eslint-disable */
 import React from 'react'
 import Ticket from '../ticket'
-import './TicketList.scss'
+import styles from './TicketList.module.scss'
 
 const TicketList = () => {
   return (
-    <ul className='ticket-list'>
+    <ul className={styles['ticket-list']}>
       <Ticket />
       <Ticket />
       <Ticket />

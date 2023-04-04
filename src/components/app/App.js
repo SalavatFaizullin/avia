@@ -1,7 +1,7 @@
 /* eslint-disable */
 import logo from '../../img/logo.png'
 import styles from './App.module.scss'
-import TicketFilter from '../ticket-filter'
+import TicketSort from '../ticket-sort'
 import TicketList from '../ticket-list'
 import TransferFilter from '../transfer-filter'
 
@@ -20,7 +20,7 @@ function App() {
         <main className={styles.main}>
           <TransferFilter />
           <div>
-            <TicketFilter />
+            <TicketSort />
             <TicketList />
             <button>Показать ещё 5 билетов!</button>
           </div>

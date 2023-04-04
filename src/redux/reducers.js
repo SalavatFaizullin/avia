@@ -1,90 +1,41 @@
 /*eslint-disable*/
 const initialState = {
-  transferFilter: [true, true, true, true, true],
+  transferFilter: {
+    all: true,
+    direct: true,
+    one: true,
+    two: true,
+    three: true,
+  },
+  ticketSortBtn: 'cheapest',
 }
-
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'ALL':
-      let newArr = []
-      if (state.transferFilter.filter((item) => item === true).length === 5) {
-        newArr = [false, false, false, false, false]
+    case 'ALL_CHECBOX_TOGGLE':
+      let obj = { ...state.transferFilter }
+      if (Object.values(state.transferFilter).filter((item) => item === true).length === 5) {
+        for (let key in obj) {
+          obj[key] = false
+        }
       } else {
-        newArr = [true, true, true, true, true]
+        for (let key in obj) {
+          obj[key] = true
+        }
       }
-      return { ...state, transferFilter: newArr }
-    case 'NONE':
-      let newNoneArr = [
-        state.transferFilter[0],
-        !state.transferFilter[1],
-        state.transferFilter[2],
-        state.transferFilter[3],
-        state.transferFilter[4],
-      ]
-      if (newNoneArr.filter((item) => item === true).length === 4) {
-        newNoneArr = [
-          !state.transferFilter[0],
-          !state.transferFilter[1],
-          state.transferFilter[2],
-          state.transferFilter[3],
-          state.transferFilter[4],
-        ]
+      return { ...state, transferFilter: obj }
+    case 'FILTER_CHECKBOX_TOGGLE':
+      const name = action.payload
+      let newObj = { ...state.transferFilter, [name]: !state.transferFilter[name] }
+      if (Object.values(newObj).filter((item) => item === true).length === 4) {
+        newObj = {
+          ...state.transferFilter,
+          all: !state.transferFilter.all,
+          [name]: !state.transferFilter[name],
+        }
       }
-      return { ...state, transferFilter: newNoneArr }
-    case 'ONE':
-      let newOneArr = [
-        state.transferFilter[0],
-        state.transferFilter[1],
-        !state.transferFilter[2],
-        state.transferFilter[3],
-        state.transferFilter[4],
-      ]
-      if (newOneArr.filter((item) => item === true).length === 4) {
-        newOneArr = [
-          !state.transferFilter[0],
-          state.transferFilter[1],
-          !state.transferFilter[2],
-          state.transferFilter[3],
-          state.transferFilter[4],
-        ]
-      }
-      return { ...state, transferFilter: newOneArr }
-    case 'TWO':
-      let newTwoArr = [
-        state.transferFilter[0],
-        state.transferFilter[1],
-        state.transferFilter[2],
-        !state.transferFilter[3],
-        state.transferFilter[4],
-      ]
-      if (newTwoArr.filter((item) => item === true).length === 4) {
-        newTwoArr = [
-          !state.transferFilter[0],
-          state.transferFilter[1],
-          state.transferFilter[2],
-          !state.transferFilter[3],
-          state.transferFilter[4],
-        ]
-      }
-      return { ...state, transferFilter: newTwoArr }
-    case 'THREE':
-      let newThreeArr = [
-        state.transferFilter[0],
-        state.transferFilter[1],
-        state.transferFilter[2],
-        state.transferFilter[3],
-        !state.transferFilter[4],
-      ]
-      if (newThreeArr.filter((item) => item === true).length === 4) {
-        newThreeArr = [
-          !state.transferFilter[0],
-          state.transferFilter[1],
-          state.transferFilter[2],
-          state.transferFilter[3],
-          !state.transferFilter[4],
-        ]
-      }
-      return { ...state, transferFilter: newThreeArr }
+      return { ...state, transferFilter: newObj }
+    case 'SORT_BTN_CLICK':
+      return { ...state, ticketSortBtn: action.payload }
     default:
       return state
   }

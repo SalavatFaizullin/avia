@@ -1,6 +1,4 @@
 /*eslint-disable*/
-export const onAll = () => ({ type: 'ALL' })
-export const onNone = () => ({ type: 'NONE' })
-export const onOne = () => ({ type: 'ONE' })
-export const onTwo = () => ({ type: 'TWO' })
-export const onThree = () => ({ type: 'THREE' })
+export const allCheckboxToggle = () => ({type: 'ALL_CHECBOX_TOGGLE'})
+export const filterCheckboxToggle = (e) => ({ type: 'FILTER_CHECKBOX_TOGGLE', payload: e.target.name })
+export const sortBtnClick = (e) => ({ type: 'SORT_BTN_CLICK', payload: e.target.name })

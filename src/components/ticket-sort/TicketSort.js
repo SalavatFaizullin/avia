@@ -1,13 +1,11 @@
 /* eslint-disable */
 import React from 'react'
 import styles from './TicketSort.module.scss'
-import { sortBtnClick } from '../../redux/actions'
-import { useSelector, useDispatch } from 'react-redux'
+import { connect } from 'react-redux'
+import * as actions from '../../redux/actions'
 import classNames from 'classnames'
 
-const TicketSort = () => {
-  const { ticketSortBtn } = useSelector((state) => state)
-  const dispatch = useDispatch()
+const TicketSort = ({ ticketSortBtn, sortBtnClick }) => {
   const btnsArr = [
     { name: 'cheapest', label: 'Самый дешевый' },
     { name: 'fastest', label: 'Самый быстрый' },
@@ -23,7 +21,7 @@ const TicketSort = () => {
         name={name}
         type='button'
         className={[styles['ticket-sort__button'], styles[`${btnClassActive}`]].join(' ')}
-        onClick={(e) => dispatch(sortBtnClick(e))}
+        onClick={sortBtnClick}
       >
         {label}
       </button>
@@ -32,4 +30,10 @@ const TicketSort = () => {
   return <div className={styles['ticket-sort']}>{buttons}</div>
 }
 
-export default TicketSort
+const mapStateToProps = (state) => {
+  return {
+    ticketSortBtn: state.ticketSortBtn,
+  }
+}
+
+export default connect(mapStateToProps, actions)(TicketSort)

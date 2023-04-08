@@ -21,3 +21,14 @@
   flex-wrap: wrap;
   justify-content: center;
 }
+
+.spinner {
+  top: 0;
+  left: 0;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  overflow: hidden;
+}

@@ -1,11 +1,17 @@
 /* eslint-disable */
+import React from 'react'
 import logo from '../../img/logo.png'
 import styles from './App.module.scss'
 import TicketSort from '../ticket-sort'
 import TicketList from '../ticket-list'
 import TransferFilter from '../transfer-filter'
+import { Spin } from 'antd'
+import { LoadingOutlined } from '@ant-design/icons'
 
-function App() {
+import * as actions from '../../redux/actions'
+import { connect } from 'react-redux'
+
+function App({ stopLoading, showMoreTickets }) {
   const Header = () => {
     return (
       <header className={styles.header}>
@@ -13,6 +19,19 @@ function App() {
       </header>
     )
   }
+  const spinnerIcon = (
+    <LoadingOutlined
+      style={{
+        fontSize: 24,
+      }}
+      spin
+    />
+  )
+  const spinner = !stopLoading ? (
+    <div className={styles.spinner}>
+      <Spin indicator={spinnerIcon} />
+    </div>
+  ) : null
   const Main = () => {
     return (
       <>
@@ -21,8 +40,11 @@ function App() {
           <TransferFilter />
           <div>
             <TicketSort />
+            {spinner}
             <TicketList />
-            <button>Показать ещё 5 билетов!</button>
+            <button type='button' onClick={showMoreTickets}>
+              Показать ещё 5 билетов!
+            </button>
           </div>
         </main>
       </>
@@ -38,4 +60,10 @@ function App() {
   )
 }
 
-export default App
+const mapStateToProps = (state) => {
+  return {
+    stopLoading: state.stopLoading,
+  }
+}
+
+export default connect(mapStateToProps, actions)(App)

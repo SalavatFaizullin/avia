@@ -1,20 +1,17 @@
 /*eslint-disable*/
-import { filterCheckboxToggle, allCheckboxToggle } from '../../redux/actions'
+import React from 'react'
 import styles from './TransferFilter.module.scss'
-import { useSelector, useDispatch } from 'react-redux'
+import * as actions from '../../redux/actions'
+import { connect } from 'react-redux'
 
-const TransferFilter = () => {
-  const { transferFilter } = useSelector((state) => state)
-  const dispatch = useDispatch()
-
-  const checkboxArr = [
+const TransferFilter = ({transferFilter, allCheckboxToggle, filterCheckboxToggle}) => {
+  const checkboxData = [
     { name: 'direct', label: 'Без пересадок' },
     { name: 'one', label: '1 пересадка' },
     { name: 'two', label: '2 пересадки' },
     { name: 'three', label: '3 пересадки' },
   ]
-
-  const checkBoxes = checkboxArr.map(({ name, label }) => {
+  const createCheckbox = (name, label, handler) => {
     return (
       <label key={name} htmlFor={name} className={styles['transfer-filter__checkbox-label']}>
         <input
@@ -24,33 +21,31 @@ const TransferFilter = () => {
           name={name}
           id={name}
           checked={transferFilter[`${name}`]}
-          onChange={(e) => dispatch(filterCheckboxToggle(e))}
+          onChange={handler}
         />
         <span className={styles['transfer-filter__checkbox']}></span>
         {label}
       </label>
     )
+  }
+  const checkBoxes = checkboxData.map(({ name, label }) => {
+    return (
+      createCheckbox(name, label, filterCheckboxToggle)
+    )
   })
-
   return (
     <aside className={styles['transfer-filter']}>
       <h3 className={styles['transfer-filter__header']}>Количество пересадок</h3>
-      <label key='all' htmlFor='all' className={styles['transfer-filter__checkbox-label']}>
-        <input
-          key='all'
-          className={styles['transfer-filter__check-input']}
-          type='checkbox'
-          name='all'
-          id='all'
-          checked={transferFilter['all']}
-          onChange={(e) => dispatch(allCheckboxToggle(e))}
-        />
-        <span className={styles['transfer-filter__checkbox']}></span>
-        Все
-      </label>
+      {createCheckbox('all', 'Все', allCheckboxToggle)}
       {checkBoxes}
     </aside>
   )
 }
 
-export default TransferFilter
+const mapStateToProps = (state) => {
+  return {
+    transferFilter: state.transferFilter
+  }
+}
+
+export default connect(mapStateToProps, actions)(TransferFilter)

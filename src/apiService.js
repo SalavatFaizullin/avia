@@ -6,11 +6,12 @@ export default class ApiService {
   async getTickets() {
     if (!this.apiKey) {
       const res = await fetch(`${this.apiBase}/search`)
-      if (!res.ok) {
+      if (res.ok) {
+        const data = await res.json()
+        this.apiKey = data.searchId
+      } else {
         throw new Error(`Could not fetch search id, received ${res.status}`)
       }
-      const data = await res.json()
-      this.apiKey = data.searchId
     }
 
     const MAX_RETRIES = 5

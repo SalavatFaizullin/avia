@@ -1,4 +1,4 @@
-.transfer-filter {
+.filter {
   display: flex;
   flex-direction: column;
   width: 232px;
@@ -34,7 +34,7 @@
     position: absolute;
   }
 
-  &__check-input:checked + .transfer-filter__checkbox {
+  &__check-input:checked + .filter__checkbox {
     background-image: url(../../img/сheckbox-checked.svg);
   }
 

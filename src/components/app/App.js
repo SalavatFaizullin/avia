@@ -2,9 +2,9 @@
 import React from 'react'
 import logo from '../../img/logo.png'
 import styles from './App.module.scss'
-import TicketSort from '../ticket-sort'
+import Sort from '../sort'
 import TicketList from '../ticket-list'
-import TransferFilter from '../transfer-filter'
+import Filter from '../filter'
 import { Spin } from 'antd'
 import { LoadingOutlined } from '@ant-design/icons'
 
@@ -37,9 +37,9 @@ function App({ stopLoading, showMoreTickets }) {
       <>
         <Header />
         <main className={styles.main}>
-          <TransferFilter />
+          <Filter />
           <div>
-            <TicketSort />
+            <Sort />
             {spinner}
             <TicketList />
             <button type='button' onClick={showMoreTickets}>

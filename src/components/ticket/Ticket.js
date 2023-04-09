@@ -3,15 +3,14 @@ import React from 'react'
 import { format } from 'date-fns'
 
 const Ticket = ({ price, carrier, segments }) => {
-  const transfers = (array) => {
-    if (!array.length) {
-      return 'пересадки'
-    } else if (array.length === 1) {
-      return '1 пересадка'
-    } else if (array.length < 5) {
-      return `${array.length} пересадки`
-    } else {
-      return `${array.length} пересадок`
+  const transfers = (stops) => {
+    switch (stops.length) {
+      case 0:
+        return 'без пересадок'
+      case 1:
+        return '1 пересадка'
+      default:
+        return `${stops.length} пересадки` 
     }
   }
   return (
@@ -21,7 +20,7 @@ const Ticket = ({ price, carrier, segments }) => {
           <tr>
             <td colSpan='2'>{price.toLocaleString()} ₽</td>
             <td>
-              <img src={`http://pics.avs.io/99/36/${carrier}.png`} alt='carrier-logo' align='right' />
+              <img src={`//pics.avs.io/99/36/${carrier}.png`} alt='carrier-logo' align='right' />
             </td>
           </tr>
         </thead>
@@ -42,7 +41,7 @@ const Ticket = ({ price, carrier, segments }) => {
             </td>
             <td>
               <div>{transfers(segments[0].stops)}</div>
-              <div>{segments[0].stops.length ? segments[0].stops.map((item) => item).join(', ') : 'Без пересадок'}</div>
+              <div>{segments[0].stops.length ? segments[0].stops.map((item) => item).join(', ') : ''}</div>
             </td>
           </tr>
           <tr>
@@ -57,11 +56,11 @@ const Ticket = ({ price, carrier, segments }) => {
             </td>
             <td>
               <div>в пути</div>
-              <div>{`${Math.floor(segments[0].duration / 60)}ч ${segments[0].duration % 60}м`}</div>
+              <div>{`${Math.floor(segments[1].duration / 60)}ч ${segments[1].duration % 60}м`}</div>
             </td>
             <td>
-              <div>{transfers(segments[0].stops)}</div>
-              <div>{segments[0].stops.length ? segments[0].stops.map((item) => item).join(', ') : 'Без пересадок'}</div>
+              <div>{transfers(segments[1].stops)}</div>
+              <div>{segments[1].stops.length ? segments[1].stops.map((item) => item).join(', ') : ''}</div>
             </td>
           </tr>
         </tbody>

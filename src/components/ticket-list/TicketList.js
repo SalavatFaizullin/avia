@@ -1,4 +1,3 @@
-/*eslint-disable*/
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import nextId from 'react-id-generator'
@@ -10,19 +9,11 @@ import Ticket from '../ticket'
 
 import styles from './TicketList.module.scss'
 
-function TicketList({
-  tickets,
-  fetchTickets,
-  visibleTicketsCount,
-  filter,
-  sort,
-  showMoreTickets,
-  stopLoading,
-  error,
-}) {
+function TicketList({ tickets, fetchTickets, visibleTicketsCount, filter, sort, showMoreTickets, stopLoading, error }) {
   useEffect(() => {
     fetchTickets()
   }, [tickets])
+
   const spinnerIcon = (
     <LoadingOutlined
       style={{
@@ -31,11 +22,13 @@ function TicketList({
       spin
     />
   )
+
   const spinner = !stopLoading ? (
     <div className={styles.spinner}>
       <Spin indicator={spinnerIcon} />
     </div>
   ) : null
+
   const visibleTickets = tickets
     .filter((ticket) => {
       if (filter.all) return true
@@ -49,10 +42,11 @@ function TicketList({
       switch (sort) {
         case 'cheapest':
           return a.price - b.price
-        case 'fastest':
+        case 'fastest': {
           const durationSumA = a.segments.reduce((acc, segment) => acc + segment.duration, 0)
           const durationSumB = b.segments.reduce((acc, segment) => acc + segment.duration, 0)
           return durationSumA - durationSumB
+        }
         case 'optimal':
           return a.price - b.price
         default:
@@ -64,6 +58,7 @@ function TicketList({
       const { price, carrier, segments } = ticket
       return <Ticket key={nextId()} price={price} carrier={carrier} segments={segments} />
     })
+
   const errorAlert = error ? (
     <div className={styles['alert-message']}>
       <Alert

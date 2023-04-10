@@ -1,4 +1,3 @@
-/*eslint-disable*/
 import ApiService from '../apiService'
 
 const api = new ApiService()

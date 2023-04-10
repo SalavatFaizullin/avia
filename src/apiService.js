@@ -1,6 +1,7 @@
-/* eslint-disable */
+/*eslint-disable*/
 export default class ApiService {
   apiBase = 'https://aviasales-test-api.kata.academy'
+
   apiKey = ''
 
   async getTickets() {
@@ -21,12 +22,13 @@ export default class ApiService {
       const res = await fetch(`${this.apiBase}/tickets?searchId=${this.apiKey}`)
       if (res.ok) {
         return await res.json()
-      } else if (res.status === 500) {
-        retries++
+      }
+      if (res.status === 500) {
+        retries += 1
       } else {
         throw new Error(`Could not fetch get tickets, received ${res.status}`)
       }
     }
-    throw new Error(`Could not fetch get tickets, exceeded maximum number of retries`)
+    throw new Error('Could not fetch get tickets, exceeded maximum number of retries')
   }
 }

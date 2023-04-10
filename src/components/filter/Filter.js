@@ -1,10 +1,12 @@
 /*eslint-disable*/
 import React from 'react'
-import styles from './Filter.module.scss'
-import * as actions from '../../redux/actions'
 import { connect } from 'react-redux'
 
-const Filter = ({ filter, toggleAll, toggleFilter }) => {
+import * as actions from '../../redux/actions'
+
+import styles from './Filter.module.scss'
+
+function Filter({ filter, toggleAll, toggleFilter }) {
   const checkboxData = [
     { name: 'direct', label: 'Без пересадок' },
     { name: 'one', label: '1 пересадка' },
@@ -23,7 +25,7 @@ const Filter = ({ filter, toggleAll, toggleFilter }) => {
           checked={filter[`${name}`]}
           onChange={handler}
         />
-        <span className={styles['filter__checkbox']}></span>
+        <span className={styles.filter__checkbox} />
         {label}
       </label>
     )
@@ -33,7 +35,7 @@ const Filter = ({ filter, toggleAll, toggleFilter }) => {
   })
   return (
     <aside className={styles.filter}>
-      <h3 className={styles['filter__header']}>Количество пересадок</h3>
+      <h3 className={styles.filter__header}>Количество пересадок</h3>
       {createCheckbox('all', 'Все', toggleAll)}
       {checkBoxes}
     </aside>

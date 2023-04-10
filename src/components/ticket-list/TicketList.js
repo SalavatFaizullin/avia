@@ -1,16 +1,41 @@
-/* eslint-disable */
+/*eslint-disable*/
 import React, { useEffect } from 'react'
-import Ticket from '../ticket'
-import styles from './TicketList.module.scss'
-import * as actions from '../../redux/actions'
 import { connect } from 'react-redux'
 import nextId from 'react-id-generator'
+import { Spin, Alert } from 'antd'
+import { LoadingOutlined } from '@ant-design/icons'
 
-const TicketList = ({ tickets, getTickets, visibleTicketsCount, filter, sort }) => {
+import * as actions from '../../redux/actions'
+import Ticket from '../ticket'
+
+import styles from './TicketList.module.scss'
+
+function TicketList({
+  tickets,
+  fetchTickets,
+  visibleTicketsCount,
+  filter,
+  sort,
+  showMoreTickets,
+  stopLoading,
+  error,
+}) {
   useEffect(() => {
-    getTickets()
+    fetchTickets()
   }, [tickets])
-
+  const spinnerIcon = (
+    <LoadingOutlined
+      style={{
+        fontSize: 24,
+      }}
+      spin
+    />
+  )
+  const spinner = !stopLoading ? (
+    <div className={styles.spinner}>
+      <Spin indicator={spinnerIcon} />
+    </div>
+  ) : null
   const visibleTickets = tickets
     .filter((ticket) => {
       if (filter.all) return true
@@ -39,8 +64,41 @@ const TicketList = ({ tickets, getTickets, visibleTicketsCount, filter, sort }) 
       const { price, carrier, segments } = ticket
       return <Ticket key={nextId()} price={price} carrier={carrier} segments={segments} />
     })
+  const errorAlert = error ? (
+    <div className={styles['alert-message']}>
+      <Alert
+        message='Извините, данные недоступны по нашей вине. Мы работаем над этим. Пожалуйста, повторите позднее.'
+        type='error'
+        showIcon
+      />
+    </div>
+  ) : null
 
-  return <ul className={styles['ticket-list']}>{visibleTickets}</ul>
+  const noTicketsAlert = Object.values(filter).every((item) => item === false) ? (
+    <div className={styles['alert-message']}>
+      <Alert message='Нет рейсов по заданным параметрам. Выберите количество пересадок.' type='info' showIcon />
+    </div>
+  ) : null
+
+  const content = !(errorAlert || noTicketsAlert) ? (
+    <>
+      <ul className={styles['ticket-list']}>
+        {spinner}
+        {visibleTickets}
+      </ul>
+      <button type='button' onClick={showMoreTickets}>
+        Показать ещё 5 билетов!
+      </button>
+    </>
+  ) : null
+
+  return (
+    <>
+      {errorAlert}
+      {noTicketsAlert}
+      {content}
+    </>
+  )
 }
 
 const mapStateToProps = (state) => {
@@ -49,6 +107,8 @@ const mapStateToProps = (state) => {
     filter: state.filter,
     visibleTicketsCount: state.visibleTicketsCount,
     sort: state.sort,
+    stopLoading: state.stopLoading,
+    error: state.error,
   }
 }
 

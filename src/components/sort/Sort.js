@@ -1,11 +1,13 @@
-/* eslint-disable */
+/*eslint-disable*/
 import React from 'react'
-import styles from './Sort.module.scss'
 import { connect } from 'react-redux'
-import * as actions from '../../redux/actions'
 import classNames from 'classnames'
 
-const Sort = ({ sort, toggleSort }) => {
+import * as actions from '../../redux/actions'
+
+import styles from './Sort.module.scss'
+
+function Sort({ sort, toggleSort }) {
   const buttonsData = [
     { name: 'cheapest', label: 'Самый дешевый' },
     { name: 'fastest', label: 'Самый быстрый' },
@@ -20,7 +22,7 @@ const Sort = ({ sort, toggleSort }) => {
         key={name}
         name={name}
         type='button'
-        className={[styles['sort__button'], styles[`${activeStyle}`]].join(' ')}
+        className={[styles.sort__button, styles[`${activeStyle}`]].join(' ')}
         onClick={toggleSort}
       >
         {label}

@@ -10,14 +10,15 @@ const initialState = {
   },
   sort: '',
   stopLoading: false,
+  error: false,
   visibleTicketsCount: 5,
 }
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case 'TOGGLE_ALL':
       const filters = { ...state.filter }
-      for (let key in filters) {
-        filters[key] = Object.values(state.filter).every((item) => item === true) ? false : true
+      for (const key in filters) {
+        filters[key] = !Object.values(state.filter).every((item) => item === true)
       }
       return { ...state, filter: filters }
     case 'TOGGLE_FILTER':
@@ -35,6 +36,8 @@ const reducer = (state = initialState, action) => {
       return { ...state, sort: action.payload }
     case 'SHOW_MORE_TICKETS':
       return { ...state, visibleTicketsCount: state.visibleTicketsCount + 5 }
+    case 'ON_ERROR':
+      return { ...state, error: true, stopLoading: true }
     case 'GET_TICKETS':
       if (!state.stopLoading) {
         return {

@@ -1,8 +1,9 @@
-/* eslint-disable */
+/*eslint-disable*/
 import { legacy_createStore as createStore, applyMiddleware } from 'redux'
-import reducer from './reducers'
 import thunk from 'redux-thunk'
 import { composeWithDevTools } from '@redux-devtools/extension'
+
+import reducer from './reducers'
 
 const store = createStore(reducer, composeWithDevTools(applyMiddleware(thunk)))
 

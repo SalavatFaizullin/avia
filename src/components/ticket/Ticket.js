@@ -2,7 +2,7 @@
 import React from 'react'
 import { format } from 'date-fns'
 
-const Ticket = ({ price, carrier, segments }) => {
+function Ticket({ price, carrier, segments }) {
   const transfers = (stops) => {
     switch (stops.length) {
       case 0:
